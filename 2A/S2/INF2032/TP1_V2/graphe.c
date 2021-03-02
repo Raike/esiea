@@ -8,7 +8,7 @@ void Menu(Graph *g, Graph *gC)
     printf("\n\n");
     int choice = -1;
 
-    printf("**MENU**\n\n-> Lire le graphe G (1) \n-> Afficher la matrice (2)\n-> Nombre de chemins (3)\n-> Liste des successeurs (4)\n-> Création d'un nouveau graphe (5)\n-> Quitter (0)\n\n-> Votre choix : ");
+    printf("**MENU**\n\n-> Lire le graphe G (1) \n-> Afficher la matrice (2)\n-> Nombre de chemins (3)\n-> Liste des successeurs (4)\n-> Création d'un nouveau graphe (5)\n-> Quitter (0)\n\n=> Votre choix : ");
     scanf("%d", &choice);
 
     switch (choice)
@@ -182,5 +182,6 @@ void NewGraph(Graph *g, Graph *gC)
         scanf("%d %d", &temp_1, &temp_2);
         fprintf(fic, "%d %d\n", temp_1, temp_2);
     }
+    fclose(fic);
     Menu(g, gC);
 }
