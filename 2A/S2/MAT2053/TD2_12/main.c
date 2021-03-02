@@ -43,44 +43,68 @@ void Chiff_vigenere(int T, char cle[], char * nom_fic_clair, char * nom_fic_chif
 {
     FILE* fic_in = fopen(nom_fic_clair, "r");
     FILE* fic_out = fopen(nom_fic_chiff, "w");
-    
-    char alphaMini[]="abcdefghijklmnopqrstuvwxyz";
-    char alphaMaj[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
-    char c; 
+
+    char c;
+    char k; 
     int i = 0; 
     
     while((c = fgetc(fic_in)) != EOF)
     {
-        int j = 0;
         if (c >= 'a' && c <= 'z')
         {
-            while (c != alphaMini[j])
-            {
-                j ++;
-            }
-            c = ((j + cle[i]) % 26) + 'a';
-            fprintf(fic_out, "%c", c);
+            k = cle[i%T] - 'a';
+            c = c - 'a';
+            c = (c + k) % 26;
+            fprintf(fic_out, "%c", c + 'a');
+            i ++;
         }
         else if (c >= 'A' && c <= 'Z')
         {
-            while (c != alphaMaj[j])
-            {
-                j ++;
-            }
-            c = ((j + cle[i]) % 26) + 'A';
+            k = cle[i%T] - 'A';
+            c = c - 'A';
+            c = (c + k) % 26;
+            fprintf(fic_out, "%c", c + 'A');
+            i ++;
+        }
+        else if (c == ' ')
+        {
             fprintf(fic_out, "%c", c);
         }
-        else if ((c >= 'a' &&  c <= 'z') || (c >= 'A' &&  c <= '2'))
+    }
+}
+
+void Dechiff_vienere(int T, char cle[], char * nom_fic_chiff, char * nom_fic_dechiff)
+{
+    FILE* fic_in = fopen(nom_fic_chiff, "r");
+    FILE* fic_out = fopen(nom_fic_dechiff, "w");
+
+    char c;
+    char k;
+    int i = 0;
+
+    while((c = fgetc(fic_in)) != EOF)
+    {
+        if (c >= 'a' && c <= 'z')
         {
+            k = cle[i%T] + 'a';
+            c = c + 'a';
+            c = (c - k + 26) % 26;
+            fprintf(fic_out, "%c", c - 'a');
             i ++;
-            if ( i == T)
-            {
-                i = 0;
-            }
+        }
+        else if (c >= 'A' && c <= 'Z')
+        {
+            k = cle[i%T] + 'A';
+            c = c + 'A';
+            c = (c - k + 26) % 26;
+            fprintf(fic_out, "%c", c - 'A');
+            i ++;
+        }
+        else if (c == ' ')
+        {
+            fprintf(fic_out, "%c", c);
         }
     }
-    
 }
 
 int main(int argc, char ** argv)
@@ -92,6 +116,9 @@ int main(int argc, char ** argv)
     Charger_Cle(T, cle, argv[1]);
 
     Chiff_vigenere(T, cle, argv[2], argv[3]);
+
+    Dechiff_vienere(T, cle, argv[3], argv[4]);
+
 
     return 0;
 }
