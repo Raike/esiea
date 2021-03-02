@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 void chiff_verman(char * nom_fic_clair, char * nom_fic_chiff, char * nom_fic_cle)
 {
@@ -19,6 +20,25 @@ void chiff_verman(char * nom_fic_clair, char * nom_fic_chiff, char * nom_fic_cle
         octet_chiff = octet_alea ^ octet_clair;
         fputc(octet_chiff,fic_out);
         fputc(octet_alea,fic_key);
+    }
+
+    fclose(fic_in);
+    fclose(fic_out);
+    fclose(fic_key);
+}
+
+void chiff_verman(char * nom_fic_chiff, char * nom_fic_dechiff, char * nom_fic_cle)
+{
+    FILE* fic_in = fopen(nom_fic_chiff, "rb");
+    FILE* fic_out = fopen(nom_fic_dechiff, "wb");
+    FILE* fic_key = fopen(nom_fic_cle, "rb");
+
+    int octet_chiff;
+
+    while((octet_chiff = fgetc(fic_in)) != EOF)
+    {
+        octet_chiff -= fgetc(fic_key);
+        fputc(octet_chiff,fic_out);
     }
 
     fclose(fic_in);
