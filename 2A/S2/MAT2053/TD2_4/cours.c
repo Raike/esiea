@@ -46,6 +46,9 @@ L
 E
 
 1)
-OKFLU WQAF
+NKN
+TELEP HONE
+
+EQAXX JUCJ
 
 */
